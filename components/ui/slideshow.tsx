@@ -141,7 +141,7 @@ export default function Slideshow({
                 {slides[currentIndex].buttonText && (
                   <a
                     href={slides[currentIndex].buttonLink || "#"}
-                    className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm sm:text-base md:text-lg uppercase "
+                    className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase "
                   >
                     {slides[currentIndex].buttonText}
                   </a>
@@ -150,7 +150,7 @@ export default function Slideshow({
                 {slides[currentIndex].secondaryButtonText && (
                   <a
                     href={slides[currentIndex].secondaryButtonLink || "#"}
-                    className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm sm:text-base md:text-lg uppercase tracking-wider"
+                    className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm uppercase tracking-wider"
                   >
                     {slides[currentIndex].secondaryButtonText}
                   </a>

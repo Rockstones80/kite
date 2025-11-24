@@ -136,7 +136,7 @@ export default function Slideshow({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-48"
+                className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-72"
               >
                 {slides[currentIndex].buttonText && (
                   <a

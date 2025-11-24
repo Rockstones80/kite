@@ -42,7 +42,7 @@ export default function Charity() {
 
   return (
     <section
-      className="group relative z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-40 px-3 sm:px-4 md:px-4 lg:px-4 w-full"
+      className="group relative z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-40 px-3 sm:px-4 md:px-4 lg:px-6 w-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

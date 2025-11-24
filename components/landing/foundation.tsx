@@ -69,7 +69,7 @@ export default function Foundation() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-md px-5 py-3 uppercase tracking-wide transition-colors duration-200 shadow-lg flex items-center justify-center w-[27%] mx-auto cursor-pointer"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm rounded-md px-6 py-3 uppercase tracking-wide transition-colors duration-200 shadow-lg flex items-center justify-center w-[27%] mx-auto cursor-pointer"
               >
                 ABOUT US
               </motion.button>

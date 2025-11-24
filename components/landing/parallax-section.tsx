@@ -59,7 +59,7 @@ export default function ParallaxSection() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-6 py-4 uppercase tracking-wide shadow-lg cursor-pointer"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm px-6 py-3 uppercase tracking-wide shadow-lg cursor-pointer"
               >
                 START DONATING TODAY
               </motion.button>

@@ -24,7 +24,7 @@ export default function ParallaxSection() {
       <div className="absolute inset-0 bg-black/60 z-10"></div>
 
       {/* Content that scrolls over the fixed background */}
-      <div className="relative z-20 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-16 pt-84">
+      <div className="relative z-20 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-16 pt-84 pb-20">
         <div className="max-w-3xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 50 }}

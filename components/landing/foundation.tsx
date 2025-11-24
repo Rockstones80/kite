@@ -12,7 +12,7 @@ export default function Foundation() {
   return (
     <section
       ref={ref}
-      className="relative w-full min-h-screen bg-[#0A7F1F] pb-32 sm:pb-36 md:pb-40 lg:pb-64 px-4 sm:px-6 lg:px-16 pt-72"
+      className="relative w-full min-h-screen bg-green-800 pb-32 sm:pb-36 md:pb-40 lg:pb-64 px-4 sm:px-6 lg:px-16 pt-72"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

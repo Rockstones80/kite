@@ -140,7 +140,7 @@ export default function Navbar() {
 
             {/* Desktop Donate Button */}
             <div className="hidden lg:flex items-center">
-              <button className="bg-[#59a318] text-white px-6 py-3 font-bold text-xs uppercase tracking-wide transition-colors duration-200 flex items-center gap-3">
+              <button className="bg-green-800 text-white px-6 py-3 font-bold text-xs uppercase tracking-wide transition-colors duration-200 flex items-center gap-3">
                 <span>CONTACT US</span>
               </button>
             </div>

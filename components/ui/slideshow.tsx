@@ -7,6 +7,12 @@ import { motion, AnimatePresence } from "motion/react";
 interface Slide {
   image: string;
   alt: string;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
 }
 
 interface SlideshowProps {
@@ -70,7 +76,7 @@ export default function Slideshow({
 
   return (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="relative w-full h-full max-h-[110vh] overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -79,7 +85,7 @@ export default function Slideshow({
         <motion.div
           key={currentIndex}
           custom={direction}
-          variants={slideVariants}
+          // variants={slideVariants}
           initial="enter"
           animate="center"
           exit="exit"
@@ -99,6 +105,59 @@ export default function Slideshow({
           />
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/85 z-10"></div>
+
+          {/* Text Content */}
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 sm:px-8 top-1/2">
+            {slides[currentIndex].subtitle && (
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="text-sm sm:text-base md:text-lg mb-4 tracking-wide font-light"
+              >
+                {slides[currentIndex].subtitle}
+              </motion.p>
+            )}
+
+            {slides[currentIndex].title && (
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="text-4xl sm:text-5xl md:text-[84px]  font-bold text-center mb-8 max-w-[800px] leading-tighter"
+              >
+                {slides[currentIndex].title}
+              </motion.h1>
+            )}
+
+            {(slides[currentIndex].buttonText ||
+              slides[currentIndex].secondaryButtonText) && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-48"
+              >
+                {slides[currentIndex].buttonText && (
+                  <a
+                    href={slides[currentIndex].buttonLink || "#"}
+                    className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm sm:text-base md:text-lg uppercase "
+                  >
+                    {slides[currentIndex].buttonText}
+                  </a>
+                )}
+
+                {slides[currentIndex].secondaryButtonText && (
+                  <a
+                    href={slides[currentIndex].secondaryButtonLink || "#"}
+                    className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm sm:text-base md:text-lg uppercase tracking-wider"
+                  >
+                    {slides[currentIndex].secondaryButtonText}
+                  </a>
+                )}
+              </motion.div>
+            )}
+          </div>
         </motion.div>
       </AnimatePresence>
 

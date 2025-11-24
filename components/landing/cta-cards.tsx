@@ -56,7 +56,7 @@ export default function CTACards() {
               {/* Card Content */}
               <div className="p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
                 {/* Title */}
-                <h3 className="text-[#0A7F1F] text-lg sm:text-xl md:text-2xl font-bold tracking-wide">
+                <h3 className="text-green-800 text-lg sm:text-xl md:text-2xl font-bold tracking-wide">
                   {card.title}
                 </h3>
 

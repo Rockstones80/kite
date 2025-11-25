@@ -18,7 +18,7 @@ export default function Hero() {
       image: "/hero-2.jpg",
       alt: "Kids In Thriving Environments - Healthcare Services",
       subtitle: "CHES Empowerment Foundation",
-      title: "Providing Health Care & Aid",
+      title: "WE BRING HOPE TO THE HOPELESS",
       buttonText: "DONATE TODAY",
       buttonLink: "#donate",
     },
@@ -26,9 +26,11 @@ export default function Hero() {
       image: "/hero-3.jpg",
       alt: "Kids In Thriving Environments - Empowerment Programs",
       subtitle: "CHES Empowerment Foundation",
-      title: "WE BRING HOPE TO THE HOPELESS",
+      title: "Providing",
+      subtitle2: "Health Care & Aid",
       buttonText: "DONATE TODAY",
       buttonLink: "#donate",
+      layout: "split" as const,
     },
   ];
 

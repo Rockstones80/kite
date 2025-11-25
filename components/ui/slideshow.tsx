@@ -9,10 +9,12 @@ interface Slide {
   alt: string;
   title?: string;
   subtitle?: string;
+  subtitle2?: string;
   buttonText?: string;
   buttonLink?: string;
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
+  layout?: "center" | "split";
 }
 
 interface SlideshowProps {
@@ -59,21 +61,6 @@ export default function Slideshow({
     return () => clearInterval(timer);
   }, [goToNext, autoPlayInterval]);
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? "-100%" : "100%",
-      opacity: 0,
-    }),
-  };
-
   return (
     <div
       className="relative w-full h-full max-h-[110vh] overflow-hidden"
@@ -106,58 +93,115 @@ export default function Slideshow({
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/85 z-10"></div>
 
-          {/* Text Content */}
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 sm:px-8 top-1/2">
-            {slides[currentIndex].subtitle && (
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-sm sm:text-base md:text-lg mb-4 tracking-wide font-light"
-              >
-                {slides[currentIndex].subtitle}
-              </motion.p>
-            )}
+          {/* Conditional Layout Rendering */}
+          {slides[currentIndex].layout === "split" ? (
+            /* Split Layout - Text Left */
+            <div className="absolute inset-0 z-20 flex flex-col lg:flex-row top-1/2">
+              {/* Left Side - Text Content */}
+              <div className="flex-1 flex flex-col justify-center text-white px-8 sm:px-16 lg:px-16 xl:px-36 2xl:px-48">
+                {slides[currentIndex].subtitle && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="text-sm sm:text-base md:text-lg mb-2 tracking-wide font-light"
+                  >
+                    {slides[currentIndex].subtitle}
+                  </motion.p>
+                )}
 
-            {slides[currentIndex].title && (
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-4xl sm:text-5xl md:text-[84px]  font-bold text-center mb-8 max-w-[800px] leading-tighter"
-              >
-                {slides[currentIndex].title}
-              </motion.h1>
-            )}
+                {slides[currentIndex].title && (
+                  <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 max-w-4xl leading-tight tracking-tight"
+                  >
+                    {slides[currentIndex].title}
+                  </motion.h1>
+                )}
+                {slides[currentIndex].subtitle2 && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold -mt-16 max-w-4xl leading-tight tracking-tight"
+                  >
+                    {slides[currentIndex].subtitle2}
+                  </motion.p>
+                )}
 
-            {(slides[currentIndex].buttonText ||
-              slides[currentIndex].secondaryButtonText) && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-72"
-              >
                 {slides[currentIndex].buttonText && (
-                  <a
-                    href={slides[currentIndex].buttonLink || "#"}
-                    className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase "
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                    className="pb-72"
                   >
-                    {slides[currentIndex].buttonText}
-                  </a>
+                    <a
+                      href={slides[currentIndex].buttonLink || "#"}
+                      className="inline-block px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase transition-colors"
+                    >
+                      {slides[currentIndex].buttonText}
+                    </a>
+                  </motion.div>
                 )}
+              </div>
+            </div>
+          ) : (
+            /* Center Layout - Default */
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 sm:px-8 top-1/2">
+              {slides[currentIndex].subtitle && (
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="text-sm sm:text-base md:text-lg mb-4 tracking-wide font-light"
+                >
+                  {slides[currentIndex].subtitle}
+                </motion.p>
+              )}
 
-                {slides[currentIndex].secondaryButtonText && (
-                  <a
-                    href={slides[currentIndex].secondaryButtonLink || "#"}
-                    className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm uppercase tracking-wider"
-                  >
-                    {slides[currentIndex].secondaryButtonText}
-                  </a>
-                )}
-              </motion.div>
-            )}
-          </div>
+              {slides[currentIndex].title && (
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="text-4xl sm:text-5xl md:text-[84px]  font-bold text-center mb-8 max-w-[800px] leading-tighter"
+                >
+                  {slides[currentIndex].title}
+                </motion.h1>
+              )}
+
+              {(slides[currentIndex].buttonText ||
+                slides[currentIndex].secondaryButtonText) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-72"
+                >
+                  {slides[currentIndex].buttonText && (
+                    <a
+                      href={slides[currentIndex].buttonLink || "#"}
+                      className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase "
+                    >
+                      {slides[currentIndex].buttonText}
+                    </a>
+                  )}
+
+                  {slides[currentIndex].secondaryButtonText && (
+                    <a
+                      href={slides[currentIndex].secondaryButtonLink || "#"}
+                      className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm uppercase tracking-wider"
+                    >
+                      {slides[currentIndex].secondaryButtonText}
+                    </a>
+                  )}
+                </motion.div>
+              )}
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
 

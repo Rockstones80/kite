@@ -15,7 +15,7 @@ export default function Subscribe() {
   };
 
   return (
-    <section className="relative w-full my-20 overflow-hidden max-w-6xl mx-auto ">
+    <section className="relative w-full my-20 overflow-hidden max-w-6xl mx-auto rounded-lg">
       {/* Background Image with Blur */}
       <div className="absolute inset-0">
         <Image
@@ -40,12 +40,12 @@ export default function Subscribe() {
           className="text-center space-y-6"
         >
           {/* Title - Black text */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
             Subscribe to our newsletter
           </h2>
 
           {/* Call to Action - Black text */}
-          <p className="text-base sm:text-lg md:text-xl text-white font-normal">
+          <p className="text-base sm:text-lg text-white font-medium">
             Discover stories that drive change:
           </p>
 

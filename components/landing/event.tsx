@@ -64,7 +64,7 @@ export default function Event() {
             <h3 className="text-yellow-500 text-sm  font-medium tracking-wide">
               Events
             </h3>
-            <div className="h-px w-16 sm:w-20  bg-green-800"></div>
+            <div className="h-px w-16 sm:w-20  bg-yellow-500"></div>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-800 mt-2">
             Upcoming & Past Events

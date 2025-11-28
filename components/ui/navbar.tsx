@@ -148,7 +148,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="lg:hidden bg-white/90 backdrop-blur-sm border border-white/30 rounded px-3 py-2 text-gray-700 hover:bg-white transition-colors"
+              className="lg:hidden rounded px-3 py-2 text-white"
               aria-label="Toggle menu"
             >
               <svg
@@ -161,7 +161,7 @@ export default function Navbar() {
                 stroke="currentColor"
               >
                 {isMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
+                  <path d="" />
                 ) : (
                   <path d="M4 6h16M4 12h16M4 18h16" />
                 )}
@@ -191,13 +191,13 @@ export default function Navbar() {
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="lg:hidden fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-50"
         >
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="KITE Initiative Logo"
-              width={150}
-              height={50}
-              className="h-auto w-auto max-h-12 object-contain"
+              width={100}
+              height={10}
+              className="h-auto w-auto object-contain max-h-20"
             />
             <button
               onClick={toggleMenu}
@@ -278,18 +278,6 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-          </div>
-
-          {/* Mobile Donate Button */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
-            <button className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-sm font-semibold text-sm uppercase tracking-wide transition-colors duration-200 flex items-center justify-center gap-3">
-              <span>DONATE TODAY</span>
-              <span className="bg-white/20 p-1.5 rounded">
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              </span>
-            </button>
           </div>
         </motion.div>
       </nav>

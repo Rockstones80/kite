@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 const cards = [
@@ -32,14 +32,146 @@ const cards = [
 export default function CTACards() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % cards.length);
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
+  };
 
   return (
     <section
       ref={ref}
-      className="absolute z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 px-3 sm:px-4 md:px-6 lg:px-12  w-full"
+      className="absolute z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 px-2 sm:px-2 md:px-6 lg:px-12 w-full"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
+        {/* Mobile Carousel View */}
+        <div
+          className="lg:hidden relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Previous Button - Left Side */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                onClick={goToPrevious}
+                className="absolute left-3 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-sm transition-colors shadow-lg"
+                aria-label="Previous card"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M15 19l-7-7 7-7" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          {/* Card Container */}
+          <div className="overflow-hidden px-3">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-none shadow-xl overflow-hidden"
+              >
+                {/* Card Content */}
+                <div className="p-10 space-y-4">
+                  {/* Title */}
+                  <h3 className="text-green-800 text-xl font-bold tracking-wide">
+                    {cards[currentIndex].title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-400 text-md leading-relaxed min-h-[60px] font-light">
+                    {cards[currentIndex].description}
+                  </p>
+
+                  {/* Icon and Arrow */}
+                  <div className="flex items-center justify-between pt-3">
+                    {/* Icon */}
+                    <div className="relative w-14 h-14">
+                      <Image
+                        src={cards[currentIndex].icon}
+                        alt={`${cards[currentIndex].title} icon`}
+                        fill
+                        className="object-contain"
+                        quality={90}
+                        style={{
+                          filter:
+                            "brightness(0) saturate(100%) invert(89%) sepia(98%) saturate(1352%) hue-rotate(0deg) brightness(102%) contrast(92%)",
+                        }}
+                      />
+                    </div>
+
+                    {/* Arrow Button */}
+                    <div className="bg-yellow-500 text-white transition-colors duration-300 p-2.5 rounded-sm">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Next Button - Right Side */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.button
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                onClick={goToNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-sm transition-colors shadow-lg"
+                aria-label="Next card"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Grid View - Unchanged */}
+        <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {cards.map((card, index) => (
             <motion.div
               key={card.title}

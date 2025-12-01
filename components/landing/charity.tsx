@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ export default function Charity() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [mobileIndex, setMobileIndex] = useState(0);
 
   // Create extended array with many duplicates for endless scrolling
   // Duplicate images many times so we can scroll infinitely
@@ -34,6 +35,16 @@ export default function Charity() {
     setCurrentIndex((prev) => prev - 1);
   };
 
+  const goToNextMobile = () => {
+    setMobileIndex((prev) => (prev + 1) % charityImages.length);
+  };
+
+  const goToPreviousMobile = () => {
+    setMobileIndex((prev) =>
+      prev === 0 ? charityImages.length - 1 : prev - 1
+    );
+  };
+
   // Calculate transform offset: move by one item width (20% of container)
   // Let it continue infinitely without bounds
   const getTransform = () => {
@@ -41,106 +52,192 @@ export default function Charity() {
   };
 
   return (
-    <section
-      className="group relative z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-40 px-3 sm:px-4 md:px-4 lg:px-6 w-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <section className="group relative z-20 -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-40 px-3 sm:px-4 md:px-4 lg:px-6 w-full">
       <div className="max-w-7xl mx-auto relative">
-        {/* Navigation Arrows - Only show on large screens where we have 5 columns */}
-        <motion.button
-          onClick={goToPrevious}
-          className="hidden lg:flex absolute left-5 top-1/2 -translate-y-1/2 -translate-x-8 z-30 bg-white/90 hover:bg-white shadow-lg rounded-md p-3 group"
-          aria-label="Previous images"
-          animate={{
-            opacity: isHovered ? 1 : 0,
-            scale: isHovered ? 1 : 0.9,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeInOut",
-          }}
-          style={{ pointerEvents: isHovered ? "auto" : "none" }}
+        {/* Mobile Carousel View */}
+        <div
+          className="lg:hidden relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <svg
-            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800 group-hover:text-yellow-500 transition-colors"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M15 19l-7-7 7-7" />
-          </svg>
-        </motion.button>
+          {/* Previous Button - Left Side */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                onClick={goToPreviousMobile}
+                className="absolute left-3 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-sm transition-colors shadow-lg"
+                aria-label="Previous image"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M15 19l-7-7 7-7" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
 
-        <motion.button
-          onClick={goToNext}
-          className="hidden lg:flex absolute right-5 top-1/2 -translate-y-1/2 translate-x-8 z-30 bg-white/90 hover:bg-white shadow-lg rounded-md p-3 group"
-          aria-label="Next images"
-          animate={{
-            opacity: isHovered ? 1 : 0,
-            scale: isHovered ? 1 : 0.9,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeInOut",
-          }}
-          style={{ pointerEvents: isHovered ? "auto" : "none" }}
-        >
-          <svg
-            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800 group-hover:text-yellow-500 transition-colors"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
-
-        {/* Carousel Container */}
-        <div className="overflow-hidden" ref={ref}>
-          <motion.div
-            className="flex gap-3 sm:gap-4 md:gap-5 lg:gap-6"
-            animate={{
-              x: getTransform(),
-            }}
-            transition={{
-              duration: 0.5,
-              ease: "easeInOut",
-            }}
-          >
-            {extendedImages.map((imageSrc, index) => (
+          {/* Image Container */}
+          <div className="overflow-hidden px-3" ref={ref}>
+            <AnimatePresence mode="wait">
               <motion.div
-                key={`charity-${index}`}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="relative shrink-0 aspect-3/4 sm:aspect-4/5 lg:aspect-4/5 overflow-hidden group cursor-pointer"
-                style={{
-                  width: `calc((100% - 4 * 1.5rem) / 5)`,
-                  minWidth: `calc((100% - 4 * 1.5rem) / 5)`,
-                }}
+                key={mobileIndex}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full aspect-[4/5] overflow-hidden shadow-xl"
               >
                 <Image
-                  src={imageSrc}
-                  alt={`Charity image ${index + 1}`}
+                  src={charityImages[mobileIndex]}
+                  alt={`Charity image ${mobileIndex + 1}`}
                   fill
-                  className="object-cover  transition-transform duration-300"
+                  className="object-cover"
                   quality={90}
                 />
               </motion.div>
-            ))}
-          </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Next Button - Right Side */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.button
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                onClick={goToNextMobile}
+                className="absolute right-3 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-sm transition-colors shadow-lg"
+                aria-label="Next image"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Carousel View - Unchanged */}
+        <div
+          className="hidden lg:block"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Navigation Arrows - Only show on large screens where we have 5 columns */}
+          <motion.button
+            onClick={goToPrevious}
+            className="absolute left-5 top-1/2 -translate-y-1/2 -translate-x-8 z-30 bg-white/90 hover:bg-white shadow-lg rounded-md p-3 group"
+            aria-label="Previous images"
+            animate={{
+              opacity: isHovered ? 1 : 0,
+              scale: isHovered ? 1 : 0.9,
+            }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+            style={{ pointerEvents: isHovered ? "auto" : "none" }}
+          >
+            <svg
+              className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800 group-hover:text-yellow-500 transition-colors"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M15 19l-7-7 7-7" />
+            </svg>
+          </motion.button>
+
+          <motion.button
+            onClick={goToNext}
+            className="absolute right-5 top-1/2 -translate-y-1/2 translate-x-8 z-30 bg-white/90 hover:bg-white shadow-lg rounded-md p-3 group"
+            aria-label="Next images"
+            animate={{
+              opacity: isHovered ? 1 : 0,
+              scale: isHovered ? 1 : 0.9,
+            }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+            style={{ pointerEvents: isHovered ? "auto" : "none" }}
+          >
+            <svg
+              className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800 group-hover:text-yellow-500 transition-colors"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.button>
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden" ref={ref}>
+            <motion.div
+              className="flex gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+              animate={{
+                x: getTransform(),
+              }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+              }}
+            >
+              {extendedImages.map((imageSrc, index) => (
+                <motion.div
+                  key={`charity-${index}`}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                  className="relative shrink-0 aspect-3/4 sm:aspect-4/5 lg:aspect-4/5 overflow-hidden group cursor-pointer"
+                  style={{
+                    width: `calc((100% - 4 * 1.5rem) / 5)`,
+                    minWidth: `calc((100% - 4 * 1.5rem) / 5)`,
+                  }}
+                >
+                  <Image
+                    src={imageSrc}
+                    alt={`Charity image ${index + 1}`}
+                    fill
+                    className="object-cover  transition-transform duration-300"
+                    quality={90}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

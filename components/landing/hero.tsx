@@ -35,7 +35,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative w-full h-[110vh] overflow-hidden">
+    <section className="relative w-full h-[60vh] lg:h-[110vh] overflow-hidden">
       <Slideshow slides={slides} autoPlayInterval={15000} showControls={true} />
     </section>
   );

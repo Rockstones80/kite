@@ -63,7 +63,7 @@ export default function Slideshow({
 
   return (
     <div
-      className="relative w-full h-full max-h-[110vh] overflow-hidden"
+      className="relative w-full h-full max-h-[60vh] lg:max-h-[110vh] overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -91,20 +91,20 @@ export default function Slideshow({
             quality={90}
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/85 z-10"></div>
+          <div className="absolute inset-0 bg-black/70 lg:bg-black/85 z-10"></div>
 
           {/* Conditional Layout Rendering */}
           {slides[currentIndex].layout === "split" ? (
             /* Split Layout - Text Left */
-            <div className="absolute inset-0 z-20 flex flex-col lg:flex-row top-1/2">
+            <div className="absolute inset-0 z-20 flex flex-col lg:flex-row lg:top-1/2">
               {/* Left Side - Text Content */}
-              <div className="flex-1 flex flex-col justify-center text-white px-8 sm:px-16 lg:px-16 xl:px-36 2xl:px-48">
+              <div className="flex-1 flex flex-col justify-center text-white px-4 lg:px-16 xl:px-36 2xl:px-48">
                 {slides[currentIndex].subtitle && (
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
-                    className="text-sm sm:text-base md:text-lg mb-2 tracking-wide font-light"
+                    className="text-xs lg:text-sm md:text-lg mb-1 lg:mb-2 tracking-wide font-light"
                   >
                     {slides[currentIndex].subtitle}
                   </motion.p>
@@ -115,7 +115,7 @@ export default function Slideshow({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 max-w-4xl leading-tight tracking-tight"
+                    className="text-2xl lg:text-7xl xl:text-8xl font-bold mb-3 lg:mb-8 max-w-4xl leading-tight tracking-tight"
                   >
                     {slides[currentIndex].title}
                   </motion.h1>
@@ -125,7 +125,7 @@ export default function Slideshow({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold -mt-16 max-w-4xl leading-tight tracking-tight"
+                    className="text-2xl lg:text-7xl xl:text-8xl font-bold -mt-3 lg:-mt-16 max-w-4xl leading-tight tracking-tight"
                   >
                     {slides[currentIndex].subtitle2}
                   </motion.p>
@@ -136,11 +136,11 @@ export default function Slideshow({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.6 }}
-                    className="pb-72"
+                    className="pb-0 lg:pb-72"
                   >
                     <a
                       href={slides[currentIndex].buttonLink || "#"}
-                      className="inline-block px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase transition-colors"
+                      className="inline-block px-4 lg:px-10 py-2 lg:py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-xs lg:text-sm uppercase transition-colors"
                     >
                       {slides[currentIndex].buttonText}
                     </a>
@@ -150,13 +150,13 @@ export default function Slideshow({
             </div>
           ) : (
             /* Center Layout - Default */
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 sm:px-8 top-1/2">
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 lg:px-8 lg:top-1/2">
               {slides[currentIndex].subtitle && (
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="text-sm sm:text-base md:text-lg mb-4 tracking-wide font-light"
+                  className="text-xs lg:text-base md:text-lg mb-2 lg:mb-4 tracking-wide font-light"
                 >
                   {slides[currentIndex].subtitle}
                 </motion.p>
@@ -167,7 +167,7 @@ export default function Slideshow({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  className="text-4xl sm:text-5xl md:text-[84px]  font-bold text-center mb-8 max-w-[800px] leading-tighter"
+                  className="text-2xl lg:text-5xl md:text-[84px] font-bold text-center mb-3 lg:mb-8 max-w-[800px] leading-tight lg:leading-tighter"
                 >
                   {slides[currentIndex].title}
                 </motion.h1>
@@ -179,12 +179,12 @@ export default function Slideshow({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.6 }}
-                  className="flex flex-wrap gap-4 sm:gap-6 justify-center pb-72"
+                  className="flex flex-wrap gap-2 lg:gap-6 justify-center pb-0 lg:pb-72"
                 >
                   {slides[currentIndex].buttonText && (
                     <a
                       href={slides[currentIndex].buttonLink || "#"}
-                      className="px-6 sm:px-10 py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-sm uppercase "
+                      className="px-4 lg:px-10 py-2 lg:py-3 bg-green-800 hover:bg-green-900 text-white font-bold text-xs lg:text-sm uppercase "
                     >
                       {slides[currentIndex].buttonText}
                     </a>
@@ -193,7 +193,7 @@ export default function Slideshow({
                   {slides[currentIndex].secondaryButtonText && (
                     <a
                       href={slides[currentIndex].secondaryButtonLink || "#"}
-                      className="px-6 sm:px-10 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-sm uppercase tracking-wider"
+                      className="px-4 lg:px-10 py-2 lg:py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs lg:text-sm uppercase tracking-wider"
                     >
                       {slides[currentIndex].secondaryButtonText}
                     </a>
@@ -205,7 +205,7 @@ export default function Slideshow({
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Controls */}
+      {/* Navigation Controls - Hidden on Mobile */}
       {showControls && slides.length > 1 && (
         <>
           {/* Previous Button */}
@@ -219,7 +219,7 @@ export default function Slideshow({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={goToPrevious}
-                className="absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm text-white p-3 sm:p-4 transition-colors"
+                className="hidden lg:block absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm text-white p-3 sm:p-4 transition-colors"
                 aria-label="Previous slide"
               >
                 <svg
@@ -248,7 +248,7 @@ export default function Slideshow({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm text-white p-3 sm:p-4  transition-colors"
+                className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm text-white p-3 sm:p-4  transition-colors"
                 aria-label="Next slide"
               >
                 <svg
@@ -266,7 +266,7 @@ export default function Slideshow({
             )}
           </AnimatePresence>
 
-          {/* Dot Indicators */}
+          {/* Dot Indicators - Hidden on Mobile */}
           <AnimatePresence>
             {isHovered && (
               <motion.div
@@ -274,7 +274,7 @@ export default function Slideshow({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2 sm:gap-3"
+                className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 gap-2 sm:gap-3"
               >
                 {slides.map((_, index) => (
                   <motion.button

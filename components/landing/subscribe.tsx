@@ -15,7 +15,7 @@ export default function Subscribe() {
   };
 
   return (
-    <section className="relative w-full my-20 overflow-hidden max-w-6xl mx-auto rounded-lg">
+    <section className="relative w-full my-20 overflow-hidden max-w-6xl mx-auto md:rounded-lg">
       {/* Background Image with Blur */}
       <div className="absolute inset-0">
         <Image

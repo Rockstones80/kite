@@ -96,7 +96,7 @@ export default function Charity() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.3 }}
-                className="relative w-full aspect-[4/5] overflow-hidden shadow-xl"
+                className="relative w-full aspect-4/5 overflow-hidden shadow-xl"
               >
                 <Image
                   src={charityImages[mobileIndex]}

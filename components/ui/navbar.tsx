@@ -142,7 +142,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center">
               <a
                 href="/contact"
-                className="bg-green-800 text-white px-6 py-3 font-bold text-xs uppercase tracking-wide transition-colors duration-200 hover:bg-green-700 flex items-center gap-3"
+                className="cursor-pointer bg-green-800 text-white px-6 py-3 font-bold text-xs uppercase tracking-wide transition-colors duration-200 hover:bg-green-700 flex items-center gap-3"
               >
                 <span>CONTACT US</span>
               </a>

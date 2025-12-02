@@ -214,7 +214,7 @@ export default function Event() {
                 delay: index * 0.2,
                 ease: "easeOut",
               }}
-              //   whileHover={{ y: -10, transition: { duration: 0.3 } }}
+            //   whileHover={{ y: -10, transition: { duration: 0.3 } }}
               className="group relative bg-white overflow-hidden shadow-lg cursor-pointer"
             >
               {/* Event Image */}
